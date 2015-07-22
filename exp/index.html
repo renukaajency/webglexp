@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Experiments in three.js</title>
+  <meta charset="utf-8">
+</head>
+<body style="margin: 0;">
+
+  <script src="build/three.min.js"></script>
+  <script src="src/extras/geometries/BoxGeometry.js"></script>
+  <script src="req/OrbitControls.js"></script>
+
+  <script>
+
+  var scene, camera, renderer;
+
+  function init() {
+
+    scene = new THREE.Scene();
+    var wid = window.innerWidth - 50,
+        hei = window.innerHeight - 50;
+
+    renderer = new THREE.WebGLRenderer({antialias:true});
+    renderer.setSize(wid, hei);
+    document.body.appendChild(renderer.domElement);
+
+    camera = new THREE.PerspectiveCamera(45, wid/hei, 0.1, 200000);
+    camera.position.set(0, 12, 0);
+    scene.add(camera);
+
+    window.addEventListener('resize', function() {
+      var wid = window.innerWidth - 50,
+          hei = window.innerHeight - 50;
+
+      renderer.setSize(wid, hei);
+      camera.aspect = wid/hei;
+      camera.updateProjectionMatrix();
+    });
+
+    renderer.setClearColor(0x333F47, 1);
+
+    var geometry = new THREE.BoxGeometry(4, 4, 2);
+    var material = new THREE.MeshLambertMaterial({color: 0x0671b5});
+    box = new THREE.Mesh(geometry, material);
+    scene.add(box);
+
+    var light = new THREE.PointLight(0xffffff);
+    light.position.set(10, 15, 15);
+    scene.add(light);
+    var light2 = new THREE.PointLight(0xffffff, 0.5, 0);
+    light2.position.set(-10, -15, 15);
+    scene.add(light2);
+    var light3 = new THREE.PointLight(0xffffff, 0.5, 0);
+    light3.position.set(-10, -35, -15);
+    scene.add(light3);
+
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+    controls.update();
+  }
+
+  init();
+  animate();
+
+  </script>
+
+  <style>
+  canvas {
+    min-width: 350px;
+    min-height: 350px;
+  }
+  </style>
+
+</body>
+</html>
