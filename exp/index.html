@@ -7,12 +7,13 @@
 <body style="margin: 0;">
 
   <script src="build/three.min.js"></script>
-  <script src="src/extras/geometries/BoxGeometry.js"></script>
   <script src="req/OrbitControls.js"></script>
 
   <script>
 
   var scene, camera, renderer;
+  var mouse = new THREE.Vector2(), INTERSECTED;
+  var radius = 100, theta = 0;
 
   function init() {
 
@@ -24,8 +25,8 @@
     renderer.setSize(wid, hei);
     document.body.appendChild(renderer.domElement);
 
-    camera = new THREE.PerspectiveCamera(45, wid/hei, 0.1, 200000);
-    camera.position.set(0, 12, 0);
+    camera = new THREE.PerspectiveCamera(25, wid/hei, 0.1, 200000);
+    camera.position.set(-10, 12, 12);
     scene.add(camera);
 
     window.addEventListener('resize', function() {
@@ -39,7 +40,7 @@
 
     renderer.setClearColor(0x333F47, 1);
 
-    var geometry = new THREE.BoxGeometry(4, 4, 2);
+    var geometry = new THREE.BoxGeometry(4, 2, 4);
     var material = new THREE.MeshLambertMaterial({color: 0x0671b5});
     box = new THREE.Mesh(geometry, material);
     scene.add(box);
@@ -55,10 +56,58 @@
     scene.add(light3);
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    //Raycaster - mouse hover on cube - 1
+    raycaster = new THREE.Raycaster();
+    //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'click', onDocumentMouseClick, false );
+  }
+
+  function onDocumentMouseMove( event ) {
+    event.preventDefault();
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  }
+  function onDocumentMouseClick( event ) {
+    event.preventDefault();
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
   }
 
   function animate() {
     requestAnimationFrame(animate);
+
+    //Raycaster - mouse hover on cube - 2
+    raycaster.setFromCamera( mouse, camera );
+
+    //changes the color
+    /*var intersects = raycaster.intersectObjects( scene.children );
+    if ( intersects.length > 0 ) {
+      if ( INTERSECTED != intersects[ 0 ].object ) {
+        if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+        INTERSECTED = intersects[ 0 ].object;
+        INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+        INTERSECTED.material.color.setHex( 0x0294f2 );
+      }
+    } else {
+      if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+      INTERSECTED = null;
+    }*/
+
+    var intersects = raycaster.intersectObjects( scene.children );
+    if ( intersects.length > 0 ) {
+      if ( INTERSECTED != intersects[ 0 ].object ) {
+        if ( INTERSECTED ) INTERSECTED.position( INTERSECTED.currentPos );
+        INTERSECTED = intersects[ 0 ].object;
+        INTERSECTED.currentPos = INTERSECTED.position();
+        INTERSECTED.position.x( 10 );
+      }
+    } else {
+      if ( INTERSECTED ) INTERSECTED.position( INTERSECTED.currentPos );
+      INTERSECTED = null;
+    }
+    http://localhost/threejs/examples/canvas_interactive_cubes_tween.html
+
     renderer.render(scene, camera);
     controls.update();
   }
@@ -72,6 +121,8 @@
   canvas {
     min-width: 350px;
     min-height: 350px;
+    margin: 25px auto;
+    display: block;
   }
   </style>
 
