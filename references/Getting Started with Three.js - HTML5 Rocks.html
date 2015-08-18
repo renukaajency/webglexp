@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://www.html5rocks.com/en/tutorials/three/intro/ -->
+<html lang="en" dir="ltr" itemscope="" itemtype="http://schema.org/Article" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths adownload webaudio no-battery blobconstructor contenteditable cors csscalc cssfilters mediaqueries no-regions classlist datalistelem details texttrackapi track filereader filesystem fullscreen getusermedia gamepads xhr2 quotamanagement performance raf no-stylescoped websocketsbinary no-webintents todataurljpeg todataurlwebp webp"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta property="twitter:account_id" content="1593210261">
+  <!-- Copyright (c) 2012 Google Inc.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *     http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *
+   * Author: Paul Lewis <paul@aerotwist.com>
+   *
+   * 
+   *
+  -->
+  <title>Getting Started with Three.js - HTML5 Rocks</title>
+  <meta name="description" content="Three.js is a powerful engine for doing native 3D work in your browser. But how do you get going?">
+  <meta name="keywords" content="html5,html 5,html5 demos,html5 examples,javascript,css3,notifications,geolocation,web workers,apppcache,file api,filereader,indexeddb,offline,audio,video,drag and drop,chrome,sse,mobile">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="theme-color" content="#f04530">
+  <link rel="shortcut icon" href="http://www.html5rocks.com/favicon.ico">
+  <link rel="alternate" type="application/rss+xml" title="HTML5 Rocks RSS" href="http://feeds.feedburner.com/html5rocks">
+  <meta name="google-site-verification" content="E1HOIDkksrWY5npenL8FeQhKn4Ujctd75iO2lfufSyA">
+  <meta itemprop="name" content="Getting Started with Three.js - HTML5 Rocks">
+  <meta itemprop="description" content="Three.js is a powerful engine for doing native 3D work in your browser. But how do you get going?">
+  
+  <meta itemprop="image" content="http://www.html5rocks.com/static/images/html5rocks-logo-wings.png">
+  
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@ChromiumDev">
+  <meta name="twitter:creator" content="@aerotwist">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Getting Started with Three.js - HTML5 Rocks">
+  <meta property="og:url" content="http://www.html5rocks.com/en/tutorials/three/intro/">
+  <meta property="og:description" content="Three.js is a powerful engine for doing native 3D work in your browser. But how do you get going?">
+  <meta property="og:image" content="http://www.html5rocks.com/static/images/profiles/paullewis.png">
+  <meta property="og:site_name" content="HTML5 Rocks - A resource for open web HTML5 developers">
+  
+
+  
+  <link rel="author" href="https://www.google.com/profiles/105201233571140699617">
+  
+  
+  <link rel="publisher" href="https://plus.google.com/+GoogleChromeDevelopers">
+
+  
+
+  
+    
+    <link rel="stylesheet" media="all" href="http://www.html5rocks.com/static/css/v2-combined.min.css?20131111">
+    
+
+    
+  
+
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,600,800|Source+Code+Pro" rel="stylesheet">
+
+  <link rel="apple-touch-icon" href="http://www.html5rocks.com/static/images/identity/HTML5_Badge_64.png">
+  <link rel="apple-touch-icon-precomposed" href="http://www.html5rocks.com/static/images/identity/HTML5_Badge_64.png">
+
+  <script type="text/javascript" src="./Getting Started with Three.js - HTML5 Rocks_files/count.js" async=""></script><script type="text/javascript" async="" src="http://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="http://www.google-analytics.com/analytics.js"></script><script async="" src="./Getting Started with Three.js - HTML5 Rocks_files/gtm.js"></script><script async="" src="http://www.google-analytics.com/analytics.js"></script><script async="" src="./Getting Started with Three.js - HTML5 Rocks_files/gtm.js"></script><script src="./Getting Started with Three.js - HTML5 Rocks_files/modernizr.custom.82437.js"></script>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5-els.js"></script>
+  <![endif]-->
+
+  
+
+
+<script async="" src="./Getting Started with Three.js - HTML5 Rocks_files/count-data.js"></script></head>
+<body data-href="tutorials-three-intro" onload="" class="article tutorial">
+
+  <header class="main" id="siteheader">
+    <h1 id="title">
+      <a href="http://www.html5rocks.com/en/" title="HTML5 Rocks">HTML5 Rocks</a>
+    </h1>
+    <a href="http://www.html5rocks.com/en/tutorials/three/intro/#sitenav" id="navtoggle">Show navigation</a>
+
+    
+    <a id="toctoggle" href="http://www.html5rocks.com/en/tutorials/three/intro/#toc">Table of Contents</a>
+    
+
+    <nav id="sitenav">
+      <ul>
+        
+        <li id="home_menu"><a href="http://www.html5rocks.com/en/" class="home">Home</a></li>
+        
+        <li id="tutorials_menu"><a href="http://www.html5rocks.com/en/tutorials/?page=1" class="tutorials">Tutorials</a></li>
+        <li id="updates_menu"><a href="http://updates.html5rocks.com/" class="updates">Updates</a></li>
+      </ul>
+    </nav>
+
+    
+    <nav class="toc" id="toc">
+      <h1>Table of Contents</h1>
+
+      <ul><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-intro">Introduction</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-1">1. The basics</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-2">2. Support</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-3">3. Set the Scene</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-4">4. Making a Mesh</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-5">5. Materials</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-6">6. Lights!</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-7">7. Render</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-8">8. Common Object Properties</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-9">9. Dirty Little Secrets</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-conclusion">Conclusion</a></li></ul>
+
+      <h1 class="visible-title">Localizations:</h1>
+      <ul>
+        
+          <li><a href="https://github.com/html5rocks/www.html5rocks.com/blob/master/CONTRIBUTING.md">Contribute one</a></li>
+        
+      </ul>
+    </nav>
+    
+  </header>
+
+  <div class="body-content">
+    
+
+  <section class="title">
+
+    
+
+    <section class="title-text container">
+      
+      <h1>Getting Started with Three.js</h1>
+      
+      
+
+      <a href="http://www.html5rocks.com/en/" class="watermark">HTML5 Rocks</a>
+    </section>
+  </section>
+
+  <article class="content-wrapper">
+
+    <section class="container">
+
+      
+
+      <div class="article-meta sticky" id="article-meta" style="top: 22px;">
+        <nav class="toc">
+          <h1>Table of Contents</h1>
+
+          <ul><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-intro">Introduction</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-1">1. The basics</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-2">2. Support</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-3">3. Set the Scene</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-4">4. Making a Mesh</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-5">5. Materials</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-6">6. Lights!</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-7">7. Render</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-8">8. Common Object Properties</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-9">9. Dirty Little Secrets</a></li><li><a href="http://www.html5rocks.com/en/tutorials/three/intro/#toc-conclusion">Conclusion</a></li></ul>
+        </nav>
+
+        <aside class="localizations">
+          <h1>Localizations</h1>
+          <ul>
+            
+              <li><a href="https://github.com/html5rocks/www.html5rocks.com/blob/master/CONTRIBUTING.md">Contribute one</a></li>
+            
+          </ul>
+        </aside>
+      </div>
+      
+
+      <div class="content" id="article-content">
+
+        <section class="byline">
+
+          <div class="byline-content">
+            
+            <section class="author-images">
+              <a href="http://www.html5rocks.com/profiles/#paullewis">
+                <img src="./Getting Started with Three.js - HTML5 Rocks_files/paullewis.png" itemprop="photo" alt="Paul Lewis" title="Paul Lewis">
+              </a>
+
+              
+            </section>
+
+            <section class="meta">
+              <div class="authors">
+                <strong>By</strong> <a href="http://www.html5rocks.com/profiles/#paullewis">Paul Lewis</a>
+                
+              </div>
+
+              
+
+              <div class="date">
+                <time pubdate=""><strong>Published:</strong> June 2nd, 2011</time>
+                
+                <span><strong>Comments:</strong> <a href="http://www.html5rocks.com/en/tutorials/three/intro/#disqus_thread" class="load-comments" data-disqus-identifier="http://www.html5rocks.com/tutorials/three/intro/">16</a></span>
+              </div>
+
+              <div id="notcompatible" class="hidden">
+                Your browser may not support the functionality in this article.
+              </div>
+            </section>
+            <div class="clear"></div>
+
+            
+          </div>
+        </section>
+
+        
+
+    <h2 id="toc-intro">Introduction</h2>
+    <p>I have used <a target="_blank" href="https://github.com/mrdoob/three.js/" title="Three.js on GitHub">Three.js</a> for some of <a href="http://aerotwist.com/lab/" target="_blank">my experiments</a>, and it does a really great job of
+    abstracting away the headaches of getting going with 3D in the browser.
+    With it you can create cameras, objects, lights, materials and more, and
+    you have a choice of renderer, which means you can decide if you want
+    your scene to be drawn using HTML 5's canvas, WebGL or SVG. And since it's
+    open source you could even get involved with the project. But right now
+    I'll focus on what I've learned by playing with it as an engine, and talk
+    you through some of the basics.</p>
+
+    <p>For all the awesomeness of Three.js, there can be times where you
+    might struggle. Typically you will need to spend quite a large amount of time with
+    the examples, reverse engineering and (in my case certainly) hunting down
+    specific functionality and occasionally <a target="_blank" href="https://github.com/mrdoob/three.js/issues" title="Three.js Issues on GitHub">asking questions via GitHub</a>. If you
+    have to as questions, by the way, I've found <a target="_blank" href="http://mrdoob.com/" title="Mr. doob">Mr. doob</a> and <a target="_blank" href="http://alteredqualia.com/" title="AlteredQualia">AlteredQualia</a> are
+    extremely helpful!</p>
+
+    <h2 id="toc-1">1. The basics</h2>
+    <p>I will assume that you have at
+    least a passing knowledge of 3D, and reasonable proficiency with
+    JavaScript. If you don't it may be worth learning a bit before you try
+    and play with this stuff, as it can get a little confusing.</p>
+
+    <p>In our 3D world we will have some of the following, which I will
+    guide you through the process of creating:</p>
+    <ol>
+      <li>A scene</li>
+      <li>A renderer</li>
+      <li>A camera</li>
+      <li>An object or two (with materials)</li>
+    </ol>
+
+    <p>You can, of course, do some crazy things, and my hope is that you will
+    go on to do that and start to experiment with 3D in your browser.</p>
+
+    <h2 id="toc-2">2. Support</h2>
+    <p>Just a quick note on support in the browsers. Google's Chrome browser is, in my experience,
+    the best browser to work with in terms of which renderers are supported, and
+    the speed of the underlying JavaScript engine. Chrome supports
+    Canvas, WebGL and SVG and it's blazingly fast. Firefox is a close second, with the
+    advent of version 4. Its JavaScript engine does seem to be a touch slower than
+    Chrome's, but again its support for the render technologies is great. Opera and Safari
+    are in the process of adding WebGL support, but their current versions only support canvas.
+    Internet Explorer (version 9+) support canvas rendering only, and I've not heard
+    anything of Microsoft planning to add WebGL capabilities.</p>
+
+    <h2 id="toc-3">3. Set the Scene</h2>
+    <p>I'll assume you've chosen a browser that supports all the rendering technologies,
+    and that you want to render with canvas or WebGL, since they're the more standard
+    choices. Canvas is more widely supported than WebGL, but it's worth noting that
+    WebGL runs on your graphics card's GPU, which means that your CPU can concentrate
+    on other non-rendering tasks like any physics or user interaction you're trying to
+    do.</p>
+
+    <p>Irrespective of your chosen renderer you should bear in mind that the JavaScript
+    will need to optimised for performance. 3D isn't a lightweight task for a browser
+    (and it's awesome that it's even possible), so be careful to understand where any
+    bottlenecks are in your code, and remove them if you can!</p>
+
+    <p>So with that said, and on the assumption <a href="https://github.com/mrdoob/three.js/archives/master" target="_blank" title="Download Three.js">you have downloaded</a> and included three.js
+    in your HTML file, how do you go about setting up a scene? Like this:
+
+    </p><pre class="prettyprint"><span class="com">// set the scene size</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> WIDTH </span><span class="pun">=</span><span class="pln"> </span><span class="lit">400</span><span class="pun">,</span><span class="pln">
+    HEIGHT </span><span class="pun">=</span><span class="pln"> </span><span class="lit">300</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// set some camera attributes</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> VIEW_ANGLE </span><span class="pun">=</span><span class="pln"> </span><span class="lit">45</span><span class="pun">,</span><span class="pln">
+    ASPECT </span><span class="pun">=</span><span class="pln"> WIDTH </span><span class="pun">/</span><span class="pln"> HEIGHT</span><span class="pun">,</span><span class="pln">
+    NEAR </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0.1</span><span class="pun">,</span><span class="pln">
+    FAR </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10000</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// get the DOM element to attach to</span><span class="pln">
+</span><span class="com">// - assume we've got jQuery to hand</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> $container </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'#container'</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// create a WebGL renderer, camera</span><span class="pln">
+</span><span class="com">// and a scene</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> renderer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">WebGLRenderer</span><span class="pun">();</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> camera </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">PerspectiveCamera</span><span class="pun">(</span><span class="pln">
+                   VIEW_ANGLE</span><span class="pun">,</span><span class="pln">
+                   ASPECT</span><span class="pun">,</span><span class="pln">
+                   NEAR</span><span class="pun">,</span><span class="pln">
+                   FAR </span><span class="pun">);</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> scene </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">Scene</span><span class="pun">();</span><span class="pln">
+
+</span><span class="com">// the camera starts at 0,0,0 so pull it back</span><span class="pln">
+camera</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">z </span><span class="pun">=</span><span class="pln"> </span><span class="lit">300</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// start the renderer</span><span class="pln">
+renderer</span><span class="pun">.</span><span class="pln">setSize</span><span class="pun">(</span><span class="pln">WIDTH</span><span class="pun">,</span><span class="pln"> HEIGHT</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// attach the render-supplied DOM element</span><span class="pln">
+$container</span><span class="pun">.</span><span class="pln">append</span><span class="pun">(</span><span class="pln">renderer</span><span class="pun">.</span><span class="pln">domElement</span><span class="pun">);</span><span class="pln">
+    </span></pre>
+    Not too tricky, really!
+    <p></p>
+
+    <h2 id="toc-4">4. Making a Mesh</h2>
+    <p>
+    So we have a scene, a camera and a renderer (I opted for a WebGL one in my sample
+    code) but we have nothing to actually draw. Three.js actually comes with support
+    for loading a few different standard file types, which is great if you are outputting
+    models from Blender, Maya, Cinema4D or anything else. To keep things simple (this
+    is about getting started after all!) I'll talk about primitives. Primitives are
+    geometric meshes, relatively basic ones like Spheres, Planes, Cubes and Cylinders.
+    Three.js lets you create these types of primitives easily:
+    </p><pre class="prettyprint"><span class="com">// set up the sphere vars</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> radius </span><span class="pun">=</span><span class="pln"> </span><span class="lit">50</span><span class="pun">,</span><span class="pln"> segments </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">,</span><span class="pln"> rings </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// create a new mesh with sphere geometry -</span><span class="pln">
+</span><span class="com">// we will cover the sphereMaterial next!</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> sphere </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">(</span><span class="pln">
+   </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">SphereGeometry</span><span class="pun">(</span><span class="pln">radius</span><span class="pun">,</span><span class="pln">
+   segments</span><span class="pun">,</span><span class="pln">
+   rings</span><span class="pun">),</span><span class="pln">
+
+   sphereMaterial</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// add the sphere to the scene</span><span class="pln">
+scene</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="pln">sphere</span><span class="pun">);</span><span class="pln">
+    </span></pre>
+    All good, but what about the material for the sphere? In the code we've used a
+    variable <strong>sphereMaterial</strong> but we've not defined it yet. First we need
+    to talk about materials in a bit more detail.
+    <p></p>
+
+    <h2 id="toc-5">5. Materials</h2>
+    <p>Without doubt this is one of the most useful parts of Three.js. It provides
+    for you a number of common (and very handy) materials to apply to your meshes:</p>
+    <ol>
+      <li>"Basic" - which just means that it renders "unlit"</li>
+      <li>Lambert</li>
+      <li>Phong</li>
+    </ol>
+    <p>
+    There are more, but again in the interests of simplicity I'll let you discover
+    those for yourself. In the case of WebGL particularly these materials can be a
+    life-saver. Why? Well because in WebGL you have to write shaders for everything
+    being rendered. Shaders are a huge topic in themselves, but in short they are
+    written in GLSL (OpenGL Shader Language), which tells the GPU
+    how something should look. This means you need to mimic the maths of lighting,
+    reflection and so on. It can get very complicated very quickly. Thanks to Three.js you don't have to do this
+    if you don't want to because it abstracts that
+    away for you. If you want to write shaders, however, you can do that too with
+    a MeshShaderMaterial, so it's a flexible setup.</p>
+
+    <p>For now, however, let's apply a lambert material to the sphere:
+    </p>
+    <pre class="prettyprint"><span class="com">// create the sphere's material</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> sphereMaterial </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">MeshLambertMaterial</span><span class="pun">(</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// a gorgeous red.</span><span class="pln">
+  color</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0xCC0000</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+    </span></pre>
+    It's worth pointing out as well that there are other properties you can specify
+    when you create a material besides the colour, such as smoothing or environment maps.
+    You should <a href="https://github.com/mrdoob/three.js/wiki/API-Reference" title="Three.js Wiki" target="_blank">check out the Wiki page</a> for the various properties you can set on
+    the materials and, in fact, any object that the engine provides for you. Also <a href="http://threejs.org/">threejs.org</a> recently sprung up, which offers a more attractive view of the API.
+    <p></p>
+
+    <h2 id="toc-6">6. Lights!</h2>
+    <p>If you were to render the scene right now you'd see a red circle. Even
+    though we have a Lambert material applied there's no light in the scene so
+    by default Three.js will revert to a full ambient light, which is the same
+    as flat colouring. Let's fix that with a simple point of light:
+    </p><pre class="prettyprint"><span class="com">// create a point light</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> pointLight </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> THREE</span><span class="pun">.</span><span class="typ">PointLight</span><span class="pun">(</span><span class="pln"> </span><span class="lit">0xFFFFFF</span><span class="pln"> </span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">// set its position</span><span class="pln">
+pointLight</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10</span><span class="pun">;</span><span class="pln">
+pointLight</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">50</span><span class="pun">;</span><span class="pln">
+pointLight</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">z </span><span class="pun">=</span><span class="pln"> </span><span class="lit">130</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// add to the scene</span><span class="pln">
+scene</span><span class="pun">.</span><span class="pln">add</span><span class="pun">(</span><span class="pln">pointLight</span><span class="pun">);</span><span class="pln">
+    </span></pre>
+    <p></p>
+
+    <h2 id="toc-7">7. Render</h2>
+    <p>
+    We now actually have everything set up to render, remarkably. But we actually
+    need to go ahead and do just that:
+    </p><pre class="prettyprint"><span class="com">// draw!</span><span class="pln">
+renderer</span><span class="pun">.</span><span class="pln">render</span><span class="pun">(</span><span class="pln">scene</span><span class="pun">,</span><span class="pln"> camera</span><span class="pun">);</span><span class="pln">
+    </span></pre>
+    And this is how it looks:
+    <p></p>
+
+    <div id="sample-1">
+
+      <!-- [SAMPLE 1] -->
+
+    </div>
+
+    <p>
+    You're probably going to want to render more than once, though, so if you're
+    going to do a loop you should really use requestAnimationFrame; it's by
+    far the smartest way of handling animation in the browser. It's not fully
+    supported as yet, so I'd totally recommend that you take a look at <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/" target="_blank" title="requestAnimationFrame for smart animating">
+    Paul Irish's shim</a>.
+    </p>
+
+    <h2 id="toc-8">8. Common Object Properties</h2>
+    <p>If you take time to look through the code for Three.js you'll see a lot
+    of objects "inherit" from Object3D. This is a base object which contains some very useful
+    properties, such as the <strong>position</strong>, <strong>rotation</strong> and <strong>scale</strong> information. In particular
+    our Sphere is a Mesh which inherits from Object3D, to which it adds its own properties:
+    <strong>geometry</strong> and <strong>materials</strong>. Why do I mention these? Well it's unlikely you're going
+    to want to just have a sphere on your screen that does nothing, and these
+    properties are worth investigating as they allow you to manipulate the underlying
+    details of the meshes and materials on the fly.
+    </p><pre class="prettyprint"><span class="com">// sphere geometry</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">geometry
+
+</span><span class="com">// which contains the vertices and faces</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">geometry</span><span class="pun">.</span><span class="pln">vertices </span><span class="com">// an array</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">geometry</span><span class="pun">.</span><span class="pln">faces </span><span class="com">// also an array</span><span class="pln">
+
+</span><span class="com">// its position</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">position </span><span class="com">// has x, y and z properties</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">rotation </span><span class="com">// same</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">scale </span><span class="com">// ... same</span><span class="pln">
+    </span></pre>
+    <p></p>
+
+    <h2 id="toc-9">9. Dirty Little Secrets</h2>
+    <p>I just wanted to quickly point out a quick gotcha for Three.js, which is that
+    if you modify, for example, the vertices of a mesh, you will notice in your render
+    loop that nothing changes. Why? Well because Three.js (as far as I can tell) caches
+    the data for a mesh as something of
+    an optimisation. What you actually need to do is to flag to Three.js that something
+    has changed so it can recalculate whatever it needs to. You do this with the following:
+    </p><pre class="prettyprint"><span class="com">// changes to the vertices</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">geometry</span><span class="pun">.</span><span class="pln">__dirtyVertices </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// changes to the normals</span><span class="pln">
+sphere</span><span class="pun">.</span><span class="pln">geometry</span><span class="pun">.</span><span class="pln">__dirtyNormals </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+    </span></pre>
+    Again there are more, but those two I've found are the most useful. You should obviously
+    only flag the things that have changed to avoid unnecessary calculations.
+    <p></p>
+
+    <h2 id="toc-conclusion">Conclusion</h2>
+    <p>Well I hope you've found this brief introduction to Three.js helpful. There's
+    nothing quite like actually getting your hands dirty and trying something, and
+    I can't recommend it highly enough. 3D running natively in the browser
+    is a lot of fun, and using an engine like Three.js takes away a lot of the
+    headaches for you and lets you get to making some seriously cool stuff.</p>
+    <p>To help you out a bit I've <a href="http://aerotwist.com/lab/getting-started-with-three-js/sample.zip" title="Get the source code">wrapped up the source code</a> in this lab article, so you can
+    use that as a reference.</p>
+    <p>If you've enjoyed this let me know via <a href="http://twitter.com/aerotwist" target="_blank" title="Say hello on Twitter">Twitter</a>, it's always good
+    to say hello!</p>
+
+  <script src="./Getting Started with Three.js - HTML5 Rocks_files/Three.js"></script>
+  <script src="./Getting Started with Three.js - HTML5 Rocks_files/Samples.js"></script>
+
+
+      </div>
+    </section>
+  </article>
+
+  
+  <section class="disqus pattern-bg-lighter">
+
+    <div id="disqus" class="container">
+
+      <h2>Comments</h2>
+
+      <div id="disqus_thread">
+
+        <a href="http://www.html5rocks.com/en/tutorials/three/intro/#disqus_thread" class="load-comments" data-disqus-identifier="http://www.html5rocks.com/tutorials/three/intro/">16</a>
+
+      </div>
+    </div>
+
+    <noscript>
+      &lt;p class="center"&gt;
+        &lt;strong&gt;
+          &lt;a href="http://disqus.com/?ref_noscript"&gt;Please enable JavaScript to view the comments powered by Disqus.&lt;/a&gt;
+        &lt;/strong&gt;
+      &lt;/p&gt;
+    </noscript>
+
+    <script>
+
+      var disqus_shortname = 'html5rocks';
+      var disqus_identifier = 'http://www.html5rocks.com/tutorials/three/intro/';
+      var disqus_url = 'http://www.html5rocks.com/tutorials/three/intro/';
+      var disqus_developer = 0;
+
+      var disqus_config = function () {
+        var funky_language_code_mapping = {
+          'de': 'de_inf',
+          'es': 'es_ES',
+          'pt': 'pt_EU',
+          'sr': 'sr_CYRL',
+          'sv': 'sv_SE',
+          'zh': 'zh_HANT'
+        };
+        this.language = funky_language_code_mapping['en'] ||
+                        'en';
+
+        this.callbacks.onReady = [ function () {
+                                      try {
+                                        ga('send', 'event', 'View comments');
+                                      } catch(err){}
+                                   } ];
+        this.callbacks.onNewComment = [ function (comment) {
+                                          try {
+                                            ga('send', 'event', 'Commented');
+                                          } catch(err){}
+                                        } ];
+      };
+
+      window.addEventListener('load', function(e) {
+
+        var c = document.createElement('script');
+        c.type = 'text/javascript';
+        c.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        c.async = true;
+
+        var s = document.getElementsByTagName('script')[0], sp = s.parentNode;
+        sp.insertBefore(c, s);
+
+        if (window.location.hash === '#disqus_thread')
+          loadComments();
+
+      }, false);
+
+      var disqus_loaded = false;
+      function loadComments() {
+
+        if (disqus_loaded)
+          return;
+
+        disqus_loaded = true;
+
+        ga('send', 'event', 'Interactions', 'Comments', 'Comments Loaded');
+
+        var s = document.getElementsByTagName('script')[0], sp = s.parentNode;
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+
+        var disqusContainer = document.getElementById('disqus');
+        disqusContainer.classList.add('active');
+
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        sp.insertBefore(dsq, s);
+      }
+
+      function outgoing(url) {
+        try {
+          ga('send', 'event', 'Outbound Links' , url);
+        } catch(err){}
+      }
+      // Open external links (also that don't have a target defined) in a new tab.
+      var externLinks = document.querySelectorAll('article.tutorial a[href^="http"]:not([target])');
+      for(var i = 0, a; a = externLinks[i]; ++i) {
+        a.target = '_blank';
+        a.addEventListener('click', new Function('outgoing(' + '"' + a.href.replace(/.*?:\/\//g, "") + '"' + ');'));
+      }
+
+      var loadCommentsButtons = document.querySelectorAll('.load-comments');
+      for(var l = 0; l < loadCommentsButtons.length; l++)
+        loadCommentsButtons[l].addEventListener('click', loadComments);
+
+    </script>
+  </section>
+  
+
+  <footer>
+    <div class="container">
+
+      
+        <h1>Next steps</h1>
+
+        
+
+        <aside class="panel share">
+          <h2>Share</h2>
+
+            <a href="https://twitter.com/share?url=http://www.html5rocks.com/tutorials/three/intro/&text=Getting%20Started%20with%20Three.js&lang=en&via=ChromiumDev&related=ChromiumDev" class="twitter" target="_blank">Twitter</a>
+
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.html5rocks.com/tutorials/three/intro/" class="facebook" target="_blank">Facebook</a>
+
+            <a href="https://plus.google.com/share?url=http://www.html5rocks.com/tutorials/three/intro/" class="gplus" onclick="javascript:window.open(this.href, &#39;&#39;, &#39;menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600&#39;);return false;">Google+</a>
+
+        </aside>
+
+        <aside class="panel rss">
+          <h2>Subscribe</h2>
+          <p>Enjoyed this article? Grab the <a href="http://feeds.feedburner.com/html5rocks">RSS feed</a> and stay up-to-date.</p>
+        </aside>
+
+      
+
+      <p class="licensing">
+      
+        Except as otherwise <a href="http://code.google.com/policies.html#restrictions">noted</a>, the content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>, and code samples are licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>.
+      
+      </p>
+
+    </div>
+  </footer>
+
+  <script>
+    window.isCompatible = function() {
+      
+  return !!Modernizr.webgl
+
+    };
+
+    if (isCompatible() === false) {
+      document.getElementById('notcompatible').className = '';
+    }
+
+    function _prettyPrint() {
+      if (typeof customPrettyPrintLanguage != 'undefined') {
+        customPrettyPrintLanguage();
+      }
+      prettyPrint();
+    }
+  </script>
+  <script async="" src="./Getting Started with Three.js - HTML5 Rocks_files/prettify.min.js" onload="_prettyPrint()"></script>
+  <!-- Google Tag Manager -->
+<noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-XXXX"
+height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MB3LRF');</script>
+<!-- End Google Tag Manager -->
+
+
+  </div>
+
+  <script>
+  (function() {
+
+    // Kill feedburner and marketing tracking arguments, but let them register
+    // before we do it.
+    setTimeout(function() {
+      if (/^\?utm_/.test(document.location.search) &&
+          window.history.replaceState) {
+        window.history.replaceState(
+            {}, '', document.location.href.replace(/\?utm_.*/, ''));
+      }
+    }, 2000);
+
+    var siteHeader = document.getElementById('siteheader');
+    var navToggle = document.getElementById('navtoggle');
+    var siteNav = document.getElementById('sitenav');
+
+    function toggle(target, forceActive) {
+
+      if (typeof toc !== 'undefined') {
+        // Switch off whichever one is not the
+        // current target
+        if (target === toc)
+          siteNav.classList.remove('active');
+        else
+          toc.classList.remove('active');
+      }
+
+      // Toggle if no force parameter is set
+      if (typeof forceActive === 'undefined') {
+        target.classList.toggle('active');
+      } else {
+        if (forceActive)
+          target.classList.add('active');
+        else
+          target.classList.remove('active');
+      }
+
+      // now find out what the set state ended up being
+      var isActive = target.classList.contains('active');
+
+      if (isActive)
+        siteHeader.classList.add('expanded');
+      else
+        siteHeader.classList.remove('expanded');
+
+    }
+
+    navToggle.addEventListener('click', function(e) {
+      toggle(siteNav);
+      e.preventDefault();
+    });
+
+    
+
+    var tocToggle = document.getElementById('toctoggle');
+    var toc = document.getElementById('toc');
+    var articleMeta = document.getElementById('article-meta');
+    var articleContent = document.getElementById('article-content');
+    var articleMetaHeight = 0;
+    var articleMetaMaxY = 0;
+    var articleMetaMinY = 0;
+    var articleContentPadding = 200;
+
+    var tocLinks = document.querySelectorAll('.toc a');
+    for (var t = 0; t < tocLinks.length; t++)
+      tocLinks[t].addEventListener('click', onTocLinkClick);
+
+    tocToggle.addEventListener('click', function(e) {
+      toggle(toc);
+      e.preventDefault();
+    });
+
+    toc.addEventListener('click', function(e) {
+      if (e.target !== siteNav)
+        toggle(toc, false);
+    });
+
+    function onTocLinkClick() {
+      ga('send', 'event', 'Interactions', 'TOC', 'TOC Clicked');
+    }
+
+    function setMinScrollYFromMetaY() {
+      var scrollPosition = window.scrollY;
+
+      var articleMetaBounds = articleMeta.getBoundingClientRect();
+      var articleMetaTop = Math.max(352,
+          articleMetaBounds.top - 20 + scrollPosition);
+
+      articleMetaHeight = articleMetaBounds.bottom - articleMetaBounds.top;
+      articleMetaMinY = articleMetaTop;
+    }
+
+    function setMaxScrollYFromContentHeight() {
+
+      var scrollPosition = window.scrollY;
+
+      var articleContentBounds = articleContent.getBoundingClientRect();
+      var articleContentTop = articleContentBounds.top + scrollPosition;
+      var articleContentHeight = articleContentBounds.bottom - articleContentBounds.top;
+
+      articleMetaMaxY = articleContentTop +
+          articleContentHeight -
+          articleMetaHeight -
+          articleContentPadding;
+
+    }
+
+    function onScroll(e) {
+
+      if (window.scrollY >= articleMetaMinY) {
+
+        articleMeta.classList.add('sticky');
+
+        var articleMetaTop = 22 - Math.max(0, window.scrollY - articleMetaMaxY);
+        articleMeta.style.top = articleMetaTop + 'px';
+
+      } else {
+        articleMeta.classList.remove('sticky');
+        articleMeta.style.top = 'auto';
+      }
+    }
+
+    if (articleMeta.getBoundingClientRect) {
+      setMinScrollYFromMetaY();
+      setMaxScrollYFromContentHeight();
+      document.addEventListener('scroll', onScroll);
+      window.addEventListener('load', setMaxScrollYFromContentHeight, false);
+    }
+
+    
+  })();
+  </script>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-15028909-1', 'auto');
+  ga('create', 'UA-49880327-4', 'auto', {'name': 'html5rocks'});
+
+  ga('send', 'pageview');
+  ga('html5rocks.send', 'pageview');
+
+  </script>
+   <!-- Google Tag Manager -->
+<noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-XXXX"
+height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MB3LRF');</script>
+<!-- End Google Tag Manager -->
+
+
+</body></html>

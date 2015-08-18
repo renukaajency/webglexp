@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Experiments in three.js</title>
+  <meta charset="utf-8">
+</head>
+<body style="margin: 0;">
+
+  <script src="build/three.min.js"></script>
+  <script src="req/OrbitControls.js"></script>
+
+  <script type="text/javascript">
+
+  //defining all variables at the beginning
+  var scene, camera, renderer;
+  //required for interaction
+  var mouse = new THREE.Vector2(), INTERSECTED;
+
+  //initializing
+  init();
+  //rendering or animating
+  animate();
+
+  function init() {
+
+  	//Creating a new Scene
+  	scene = new THREE.Scene();
+  	var wid = window.innerWidth - 50,
+        hei = window.innerHeight - 50;
+
+    //Creating and adding the renderer to the page - and setting its size
+    renderer = new THREE.WebGLRenderer({antialias:true});
+    renderer.setSize(wid, hei);
+    document.body.appendChild(renderer.domElement);
+
+    //creating a camera and adding it to the scene - aspect ratio is based on width n height of renderer
+    camera = new THREE.PerspectiveCamera(55, wid/hei, 0.1, 200000);
+    camera.position.set( 300, 100, 400 );
+    scene.add(camera);
+
+    //on resize - adjusts dimensions
+    window.addEventListener('resize', function() {
+      var wid = window.innerWidth - 50,
+          hei = window.innerHeight - 50;
+
+      renderer.setSize(wid, hei);
+      camera.aspect = wid/hei;
+      camera.updateProjectionMatrix();
+    });
+
+    //like a background
+    renderer.setClearColor(0xDDDDDD, 1);
+
+    //creates a box geometry
+    var geometry = new THREE.BoxGeometry(40, 20, 40);
+    //creates a lambert material
+    var material = new THREE.MeshLambertMaterial({color: 0x0671b5});
+    //creating box
+    box = new THREE.Mesh(geometry, material);
+    //add box to scene
+    scene.add(box);
+
+    geometry = new THREE.BoxGeometry(40, 20, 40);
+    //creates a lambert material
+    material = new THREE.MeshLambertMaterial({color: 0x0671b5});
+    //creating box
+    box2 = new THREE.Mesh(geometry, material);
+    //add box to scene
+    scene.add(box2);
+    box2.position.y = 20;
+
+    geometry = new THREE.BoxGeometry(40, 20, 40);
+    //creates a lambert material
+    material = new THREE.MeshLambertMaterial({color: 0x0671b5});
+    //creating box
+    box3 = new THREE.Mesh(geometry, material);
+    //add box to scene
+    scene.add(box3);
+    box3.position.z = 40;
+
+    geometry = new THREE.BoxGeometry(40, 20, 40);
+    //creates a lambert material
+    material = new THREE.MeshLambertMaterial({color: 0x0671b5});
+    //creating box
+    box4 = new THREE.Mesh(geometry, material);
+    //add box to scene
+    scene.add(box4);
+    box4.position.z = 40;
+    box4.position.y = 20;
+
+
+    //creating a light
+    var light = new THREE.PointLight(0xffffff, 2.66, 0);
+    //set light position
+    light.position.set(100, 150, 150);
+    //add light to scene
+    scene.add(light);
+    //adding 2 more lights for better viewing
+    var light2 = new THREE.PointLight(0xffffff, 0.9, 0);
+    light2.position.set(-100, -150, 150);
+    scene.add(light2);
+    var light3 = new THREE.PointLight(0xffffff, 3.6, 0);
+    light3.position.set(-100, -350, -150);
+    scene.add(light3);
+
+
+    var size = 500, step = 50;
+
+        var geometry = new THREE.Geometry();
+
+        for ( var i = - size; i <= size; i += step ) {
+
+          geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
+          geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
+
+          geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
+          geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
+
+        }
+
+        var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
+
+        var line = new THREE.Line( geometry, material, THREE.LinePieces );
+        scene.add( line );
+
+    //adding orbit controls to the scene
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    //Raycaster - mouse hover on cube
+    raycaster = new THREE.Raycaster();
+    //document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    document.addEventListener( 'click', onDocumentMouseClick, false );
+  }
+
+  function onDocumentMouseClick( event ) {
+    event.preventDefault();
+    mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+    mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  }
+
+  function animate() {
+  	//helpful in animating - requests animate() accdg to fps
+  	requestAnimationFrame( animate );
+
+    //Raycaster - mouse hover on cube - 2
+    raycaster.setFromCamera( mouse, camera );
+
+    var intersects = raycaster.intersectObjects( scene.children );
+    if ( intersects.length > 0 ) {
+      if ( INTERSECTED != intersects[ 0 ].object ) {
+        if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+        INTERSECTED = intersects[ 0 ].object;
+        INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+        INTERSECTED.material.color.setHex( 0x444444 );
+      }
+    } else {
+      if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+      INTERSECTED = null;
+    }
+
+  	// if (box.position.y <= 5) {
+  	// 	box.position.y += 0.1;
+  	// 	console.log(box.position.y);
+  	// } else {
+  	// 	if (box.position.x >= -5) {
+  	// 		box.position.x -= 0.1;
+  	// 	}
+  	// }
+
+  	//renders the scene with the camera
+  	renderer.render( scene, camera );
+  	//updates controls accdg to camera? unsure abt this
+  	controls.update();
+  }
+
+  </script>
+
+  <style>
+  canvas {
+    min-width: 350px;
+    min-height: 350px;
+    margin: 25px auto;
+    display: block;
+  }
+  a.navi {
+    display: block;
+    padding: 5px 12px;
+    background-color: #0671b5;
+    color: #fff;
+    font-family: 'Open Sans';
+    text-transform: uppercase;
+    text-decoration: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  a.navi:hover {
+    opacity: 1;
+  }
+  </style>
+
+  <a class="navi" href="index.html">Home</a>
+
+</body>
+</html>

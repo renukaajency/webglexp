@@ -81,7 +81,7 @@
     raycaster.setFromCamera( mouse, camera );
 
     //changes the color
-    /*var intersects = raycaster.intersectObjects( scene.children );
+    var intersects = raycaster.intersectObjects( scene.children );
     if ( intersects.length > 0 ) {
       if ( INTERSECTED != intersects[ 0 ].object ) {
         if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
@@ -92,21 +92,21 @@
     } else {
       if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
       INTERSECTED = null;
-    }*/
-
-    var intersects = raycaster.intersectObjects( scene.children );
-    if ( intersects.length > 0 ) {
-      if ( INTERSECTED != intersects[ 0 ].object ) {
-        if ( INTERSECTED ) INTERSECTED.position( INTERSECTED.currentPos );
-        INTERSECTED = intersects[ 0 ].object;
-        INTERSECTED.currentPos = INTERSECTED.position();
-        INTERSECTED.position.x( 10 );
-      }
-    } else {
-      if ( INTERSECTED ) INTERSECTED.position( INTERSECTED.currentPos );
-      INTERSECTED = null;
     }
-    http://localhost/threejs/examples/canvas_interactive_cubes_tween.html
+
+    // var intersects = raycaster.intersectObjects( scene.children );
+    // if ( intersects.length > 0 ) {
+    //   if ( INTERSECTED != intersects[ 0 ].object ) {
+    //     if ( INTERSECTED ) INTERSECTED.position( INTERSECTED.currentPos );
+    //     INTERSECTED = intersects[ 0 ].object;
+    //     INTERSECTED.currentPos = INTERSECTED.position();
+    //     INTERSECTED.position.x( 10 );
+    //   }
+    // } else {
+    //   if ( INTERSECTED ) INTERSECTED.position( INTERSECTED.currentPos );
+    //   INTERSECTED = null;
+    // }
+    //http://localhost/threejs/examples/canvas_interactive_cubes_tween.html
 
     renderer.render(scene, camera);
     controls.update();
@@ -124,7 +124,26 @@
     margin: 25px auto;
     display: block;
   }
+  a.navi {
+    display: block;
+    padding: 5px 12px;
+    background-color: #0671b5;
+    color: #fff;
+    font-family: 'Open Sans';
+    text-transform: uppercase;
+    text-decoration: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  a.navi:hover {
+    opacity: 1;
+  }
   </style>
+
+  <a class="navi" href="basics.html">Basics</a>
 
 </body>
 </html>
