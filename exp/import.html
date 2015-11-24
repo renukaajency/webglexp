@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Experiments in three.js</title>
+  <meta charset="utf-8">
+</head>
+<body style="margin: 0;">
+
+  <script src="build/three.min.js"></script>
+  <script src="req/OBJLoader.js"></script>
+  <script src="req/OrbitControls.js"></script>
+
+  <script>
+
+    var container;
+
+    var camera, scene, renderer, raycaster;
+    var mouse = new THREE.Vector2(), INTERSECTED;
+
+    var mouseX = 0, mouseY = 0;
+
+    var ww = window.innerWidth - 50;
+    var hh = window.innerHeight - 50;
+
+    var windowHalfX = ww / 2;
+    var windowHalfY = hh / 2;
+
+
+    init();
+    animate();
+
+
+    function init() {
+
+      container = document.createElement( 'div' );
+      document.body.appendChild( container );
+
+      camera = new THREE.PerspectiveCamera( 45, ww / hh, 1, 2000 );
+      camera.position.set( 50, 50, 50 );
+
+                // scene
+
+                scene = new THREE.Scene();
+
+                // var ambient = new THREE.AmbientLight( 0xffffff );
+                // scene.add( ambient );
+
+                var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+                directionalLight.position.set( 0, 0, 10 );
+                scene.add( directionalLight );
+
+                var spotLight = new THREE.SpotLight(0xffffff);
+                spotLight.castShadow = true;
+                spotLight.shadowCameraVisible = true;
+                spotLight.shadowCameraFov = 70;
+                // spotLight.shadowMapWidth = 1024;
+                // spotLight.shadowMapHeight = 1024;
+
+                // spotLight.shadowCameraNear = 500;
+                // spotLight.shadowCameraFar = 4000;
+                // spotLight.shadowCameraFov = 30;
+                // gives white grid like thing over the spotlight
+                var spot = new THREE.SpotLightHelper(spotLight, 50);
+                //set light position
+                spotLight.position.set(-45, 20, 50);
+                spotLight.rotation.x = -45;
+                spotLight.rotation.z = 65;
+                //add light to scene
+                // scene.add(spotLight, spot);
+
+                // adds a grid
+                var size = 500, step = 10;
+                var geometry = new THREE.Geometry();
+
+                for ( var i = - size; i <= size; i += step ) {
+                  geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
+                  geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
+
+                  geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
+                  geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
+                }
+
+                var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2, transparent: true } );
+
+                var line = new THREE.Line( geometry, material, THREE.LinePieces );
+                scene.add( line );
+
+                var geometry = new THREE.PlaneBufferGeometry ( 100, 100, 32 );
+                var material = new THREE.MeshLambertMaterial( {color: 0xcccccc, side: THREE.DoubleSide} );
+                var plane = new THREE.Mesh( geometry, material );
+                plane.recieveShadow = true;
+                plane.rotation.x = 89.54;
+                scene.add( plane );
+
+                geometry = new THREE.BoxGeometry(10, 10, 5);
+                //creates a phong material - spotlight doesn't work with lambert
+                material = new THREE.MeshPhongMaterial({color: 0x0671b5});
+                //creating box
+                box2 = new THREE.Mesh(geometry, material);
+                box2.castShadow = true;
+                //add box to scene
+                scene.add(box2);
+                box2.position.y = 5;
+                box2.position.x = 25;
+
+                // texture
+
+                var manager = new THREE.LoadingManager();
+                manager.onProgress = function ( item, loaded, total ) {
+
+                  console.log( item, loaded, total );
+
+                };
+
+                var texture = new THREE.Texture();
+
+                var onProgress = function ( xhr ) {
+                  if ( xhr.lengthComputable ) {
+                    var percentComplete = xhr.loaded / xhr.total * 100;
+                    console.log( Math.round(percentComplete, 2) + '% downloaded' );
+                  }
+                };
+
+                var onError = function ( xhr ) {
+                  console.log('not loaded stuff');
+                };
+
+
+                var loader = new THREE.ImageLoader( manager );
+                loader.load( 'req/models/rt.jpg', function ( image ) {
+
+                  texture.image = image;
+                  texture.needsUpdate = true;
+
+                } );
+
+                material = new THREE.MeshPhongMaterial({color: 0x0671b5});
+
+                // model
+
+                var loader = new THREE.OBJLoader( manager );
+                loader.load( 'req/models/stuff.obj', function ( object ) {
+
+                  object.traverse( function ( child ) {
+
+                    if ( child instanceof THREE.Mesh ) {
+                        child.material = material;
+                        // child.material.map = texture;
+                        // child.material = material;
+                      }
+
+                    } );
+
+                  object.material - material;
+
+                  object.position.y = 0;
+                    // object.scale.y = 10;
+                    // object.scale.x = 10;
+                    // object.scale.z = 10;
+                    scene.add( object );
+
+                  }, onProgress, onError );
+
+
+                //
+
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio( window.devicePixelRatio );
+                renderer.setSize( ww, hh );
+                container.appendChild( renderer.domElement );
+
+                renderer.setClearColor(0xDDDDDD, 1);
+
+                //adding orbit controls to the scene
+                controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+                window.addEventListener( 'resize', onWindowResize, false );
+                document.addEventListener( 'click', onDocumentMouseClick, false );
+
+
+                //Raycaster - mouse hover on cube
+                raycaster = new THREE.Raycaster();
+
+              }
+
+              function onDocumentMouseClick( event ) {
+                event.preventDefault();
+                mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+                mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+              }
+
+              function onWindowResize() {
+
+                windowHalfX = ww / 2;
+                windowHalfY = hh / 2;
+
+                camera.aspect = ww / hh;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize( ww, hh );
+
+              }
+
+              function animate() {
+
+                requestAnimationFrame( animate );
+                render();
+
+                //Raycaster - mouse hover on cube - 2
+                raycaster.setFromCamera( mouse, camera );
+
+                var intersects = raycaster.intersectObjects( scene.children );
+                if ( intersects.length > 0 ) {
+                  if ( INTERSECTED != intersects[ 0 ].object ) {
+                    if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+                    INTERSECTED = intersects[ 0 ].object;
+                    INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+                    INTERSECTED.material.color.setHex( 0x444444 );
+                  }
+                } else {
+                  if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+                  INTERSECTED = null;
+                }
+
+
+              }
+
+              function render() {
+
+                // camera.position.x += ( mouseX - camera.position.x ) * .05;
+                // camera.position.y += ( - mouseY - camera.position.y ) * .05;
+
+                camera.lookAt( scene.position );
+
+                renderer.render( scene, camera );
+
+              }
+            </script>
+
+            <style>
+              canvas {
+                min-width: 350px;
+                min-height: 350px;
+                margin: 25px auto;
+                display: block;
+              }
+            </style>
+
+          </body>
+          </html>
